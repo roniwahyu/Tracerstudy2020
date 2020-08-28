@@ -33,3 +33,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 public/credentials/
 
 public/.env.php
+
+application/config/config.php
+
+application/config/database.php
