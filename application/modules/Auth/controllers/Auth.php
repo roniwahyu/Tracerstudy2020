@@ -213,7 +213,7 @@ class Auth extends CI_Controller
 		}
 	}
 	
-	public function login_admin()
+	public function admin()
 	{
 		$this->temp->set_baseview('base_view_login');
 		$this->temp->set_layout('login');
