@@ -58,6 +58,7 @@ $route['logout'] = 'auth/logout'; // Example 4
 $route['login'] = 'auth/login'; // Example 4
 $route['forgot'] = 'auth/forgot_password'; // Example 4
 $route['login'] = 'auth/login'; // Example 4
+$route['activate/([a-zA-Z0-9_-]+)'] = 'tracerstudy/user/activate/$1'; // Example 4
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes

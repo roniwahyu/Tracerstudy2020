@@ -36,7 +36,7 @@ class Emailers extends MX_Controller {
 		</body>
 		</html>';
 		$data=[
-			'email_penerima'=>'usahamkm@gmail.com',
+			'email_penerima'=>'roniwahyu@gmail.com',
 			'subjek'=>$subject,
 			'content'=>$body,
 		];
