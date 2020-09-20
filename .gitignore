@@ -37,3 +37,21 @@ public/.env.php
 application/config/config.php
 
 application/config/database.php
+
+application/_modules/
+
+application/config/_config.php
+
+application/config/_database.php
+
+public/token.json
+
+public/setting.ini
+
+application/modules/_tracerstudy/
+
+application/modules/_mailer/
+
+public/assets/js/_apps.js
+
+application/modules/Auth/views/_login.php
