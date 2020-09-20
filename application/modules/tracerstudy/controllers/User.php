@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends Admin_Controller {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('user_model','udb',true);
 		$this->load->library(['ion_auth', 'form_validation']);
 		$this->load->helper(['url', 'language']);
-
+		$this->load->model('ion_auth_model','authdb',true);
 		$this->temp->set_theme(THEMES);
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -47,7 +47,8 @@ class User extends CI_Controller {
 			$nim=$hashing['data']['nim'];
 			$mhs=$this->getmhs($nim);
 			$nama=($this->split_name($mhs['data']['nama']));
-			$password="@".(substr($mhs['data']['nim'],0,8));
+			// $password="@".(substr($mhs['data']['nim'],0,8));
+			$password="@passwordnyagoogle123456#";
 			$data=[
 				'email'=>!empty($mhs['data']['email'])?$mhs['data']['email']:'roniwahyu@gmail.com',
 				'identity'=>!empty($mhs['data']['email'])?$mhs['data']['email']:$mhs['data']['nim'],
@@ -59,6 +60,7 @@ class User extends CI_Controller {
 					'phone'=>!empty($mhs['data']['telp'])?$mhs['data']['telp']:'0123456789',
 					'nim'=>$nim,
 					'claimed'=>NOW(),
+					'created'=>NOW(),
 				],
 			];
 			echo "<pre>";
@@ -159,14 +161,11 @@ class User extends CI_Controller {
 			$password = $data['password'];
 			$identity = $data['identity'];
 
-			$additional_data = [
-				'first_name' => $data['first_name'],
-				'last_name' => $data['last_name'],
-				'company' => $data['company'],
-				'phone' => $data['phone'],
-			];
+			
 
-			$this->ion_auth->register($identity, $password, $email, $additional_data);
+			if(!$this->authdb->identity_check($data['email'])){
+				$this->ion_auth->register($identity, $password, $email, $data['additional_data']);
+			}
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
 			// redirect("auth", 'refresh');
 		

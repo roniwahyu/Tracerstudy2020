@@ -18,17 +18,13 @@
                     <a href="<?=$google_login_url?>" class="btn btn-google btn-block btn-lg"><i class="socicon-google"></i> Login dengan Google</a>
                     
                   <?php }else{?>
-                    <?php if($isactive==0): ?>
                     <p>
-                    <h3 class="text-danger">Akun <?= $this->session->userdata('email_google') ?> Anda belum diaktifkan, lakukan aktivasi akun melalui email Anda</h3>
+                      
+                    <h3 class="text-danger">Akun Anda belum diaktifkan, lakukan aktivasi akun melalui email Anda</h3>
                     <h5>Jika Anda tidak menemukan email kiriman kami, silakan periksa di folder SPAM</h5>
                     </p>
-                    <?php elseif($isactive==1): ?>
-                    <h5 class="text-success">Selamat, akun Anda sudah diaktifkan</h5>
-                    <a href="<?=base_url()?>login" class="btn btn-google btn-block btn-lg"><i class="socicon-google"></i> Login Disini</a>
-                    <?php else: ?>
+
                     <a href="<?=base_url()?>logout" class="btn btn-google btn-block btn-lg"><i class="socicon-google"></i> Logout</a>
-                    <?php endif; ?>
                   <?php }
                   ?>
                 <?php endif; ?>

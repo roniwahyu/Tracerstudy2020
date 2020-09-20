@@ -65,11 +65,11 @@ class Ion_auth
 		$this->check_compatibility();
 
 		$this->config->load('ion_auth', TRUE);
-		$this->load->library(['email','session']);
+		$this->load->library(['email']);
 		$this->lang->load('ion_auth');
 		$this->load->helper(['cookie', 'language','url']);
 
-		// $this->load->library('session');
+		$this->load->library('session');
 
 		$this->load->model('ion_auth_model');
 
@@ -172,7 +172,6 @@ class Ion_auth
 
 					if ($this->email->send())
 					{
-						log_message('debug', $this->email->print_debugger());
 						$this->set_message('forgot_password_successful');
 						return TRUE;
 					}

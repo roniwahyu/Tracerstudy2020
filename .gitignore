@@ -55,3 +55,7 @@ application/modules/_mailer/
 public/assets/js/_apps.js
 
 application/modules/Auth/views/_login.php
+
+application/modules/auth/controllers/_Auth.php
+
+application/modules/auth/views/email/_activate.tpl.php

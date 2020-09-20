@@ -1,6 +1,6 @@
-<?php 
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Tracerstudy extends MX_Controller{
+class Tracerstudy extends Admin_Controller{
 	function __construct(){
 		parent::__construct();
 		 if ($this->session->userdata("login") != TRUE) {
@@ -79,7 +79,7 @@ class Tracerstudy extends MX_Controller{
     function mhs(){
         $nim=$this->session->userdata('nim');
         // if(isset($nim) || !empty($nim) || $nim>0){
-            $this->template->set_layout('narrow');
+            // $this->template->set_layout('narrow');
             $this->template->add_js('var baseurl="'.base_url('jawab_mhs').'/";','embed');
             $this->template->add_js('var jawaburl="'.base_url().'jawab_mhs/";','embed');  
             $this->template->add_js('var memberurl="'.base_url().'members/";','embed');  
@@ -106,7 +106,7 @@ class Tracerstudy extends MX_Controller{
          $mhs=$this->getmhs($user->username);
          // print_r($user->nim);
          // print_r($mhs);
-            $this->template->load_view('tracer',
+            $this->template->render('tracer',
                 array(
                     'user'=>$user,
                     'detail'=>$mhs,

@@ -17,6 +17,9 @@ class Auth extends CI_Controller
 		$this->load->library(['ion_auth', 'form_validation']);
 		$this->load->helper(['url', 'language']);
 
+		//modifikasi SWI 11/09/2020 untuk cek apakah akun sudah diaktifkan atau belum
+		$this->load->model('auth_model','authdb',TRUE);
+
 		$this->temp->set_theme(THEMES);
 		// $this->temp->set_theme(THEMES);
         $this->temp->set_layout('dashboardv0');
@@ -175,7 +178,7 @@ class Auth extends CI_Controller
 		}
 		else
 		{
-
+			
 			// the user is not logging in so display the login page
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -194,7 +197,9 @@ class Auth extends CI_Controller
 			];
 			$this->data['widget']=$this->recaptcha->getWidget();
 			$this->data['script']=$this->recaptcha->getScriptTag();
-
+			$isactive=$this->authdb->cek_isactivebyemail($this->session->userdata('email_google'));
+			$this->data['isactive']=!empty($isactive['active'])?$isactive['active']:false;
+			// print_r($isactive['active']);
 				/*$this->data = array(
 	            'widget' => ,
 	            'script' => $this->recaptcha->getScriptTag(),
@@ -212,8 +217,7 @@ class Auth extends CI_Controller
 			// $this->_render_page('auth' . DIRECTORY_SEPARATOR . 'login', $this->data);
 		}
 	}
-	
-	public function admin()
+    public function admin()
 	{
 		$this->temp->set_baseview('base_view_login');
 		$this->temp->set_layout('login');
@@ -223,14 +227,14 @@ class Auth extends CI_Controller
         $this->load->config('google_config');
 	
 
-		/*$this->load->library('recaptcha');
-		$recaptcha = $this->input->post('g-recaptcha-response');
-		if (!empty($recaptcha)) {
-            $response = $this->recaptcha->verifyResponse($recaptcha);
-           /* if (isset($response['success']) and $response['success'] === true) {
-                echo "You got it!";
-            }
-        }*/
+// 		$this->load->library('recaptcha');
+// 		$recaptcha = $this->input->post('g-recaptcha-response');
+// 		if (!empty($recaptcha)) {
+//             $response = $this->recaptcha->verifyResponse($recaptcha);
+//                 if (isset($response['success']) and $response['success'] === true) {
+//                 echo "You got it!";
+//             }
+//         }
 
 		$this->data['title'] = $this->lang->line('login_heading');
 		$this->data['google_login_url']=$this->google->get_login_url();
@@ -310,12 +314,12 @@ class Auth extends CI_Controller
 	        );
 */
 			$this->temp->add_js('login.js');
-			/*$this->temp->add_js('function recaptchacallback(){
-				$("#kt_login_signin_submit").removeAttr("disabled");
-			}','embed');*/
+// 			$this->temp->add_js('function recaptchacallback(){
+// 				$("#kt_login_signin_submit").removeAttr("disabled");
+// 			}','embed');
 			$this->temp->add_css('login-v4.demo3.min.css');
 			// $this->temp->render('login', $this->data);
-			$this->temp->render('auth/login_admin', $this->data);
+			$this->temp->render('auth/admin_login', $this->data);
 
 			// $this->_render_page('auth' . DIRECTORY_SEPARATOR . 'login', $this->data);
 		}
@@ -605,7 +609,7 @@ class Auth extends CI_Controller
 		{
 			// redirect them to the auth page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			redirect("auth/logout", 'refresh');
 		}
 		else
 		{
